@@ -1,0 +1,39 @@
+
+  <div >
+    <br/>
+    <label style = "color: black;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"for="word">Enter Word To Search:</label>
+    <br/>
+    <input #inpu type="text" 
+    style="width: 500px !important; padding-top: 5px;" 
+    placeholder="Enter Word" 
+    class="form-control"
+    id="word">
+  </div>
+  <br/>
+  <button type="submit" class="btn btn-primary" (click)="getWordMeaning(inpu.value)">Search</button>
+<div  *ngIf = "wordMeaning" style="width: 600px !important; padding-top: 5px;" >
+  <ul class="list-group">
+    <h3>Word : {{wordMeaning.word}}</h3>
+    <div *ngIf = "wordMeaning.meanings">
+      <li class="list-group-item" *ngFor = "let meaning of wordMeaning.meanings">
+        <p *ngIf = "meaning.partOfSpeech"><b>Part of Speech: </b><span>{{meaning.partOfSpeech}}</span></p>
+        <div *ngFor = "let definition of meaning.definitions">   
+          <p *ngIf = "definition.synonyms && definition.synonyms.length !== 0"> <b>Synonyms: </b> {{definition.synonyms.join(', ')}}</p>
+          <p *ngIf = "definition.example"> <b>Example: </b>{{definition.example}}</p>
+        </div>    
+      </li>
+    </div>
+    <br/>
+    <div *ngIf = "wordMeaning.phonetics">
+       
+       <ng-container *ngFor = "let phonetic of wordMeaning.phonetics">
+         <h3>
+           Play Sound
+         </h3>
+         <button (click) = "play(phonetic.audio)">{{phonetic.text}}</button>
+       </ng-container>
+    </div>
+   
+    <br/>
+  </ul>
+</div>
